@@ -15,13 +15,17 @@ const path = require("path");
 
 dotenv.config();
 
-mongoose.connect(
-  process.env.MONGO_URL,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  () => {
-    console.log("Connected to MongoDB");
-  }
-);
+const connectionParams={
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}
+try {
+  mongoose.connect(process.env.MONGO_URL, connectionParams)
+  console.log("Database Connected Successfully!")
+} catch (error) {
+  console.log(error)
+  console.log("Database Connection Failed!")
+}
 app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 //middleware
